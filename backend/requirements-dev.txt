@@ -1,0 +1,4 @@
+-r requirements.txt
+pytest>=8
+# 브라우저 스모크 테스트(scripts/smoke_e2e.py)용. 설치 후: playwright install chromium
+playwright>=1.45

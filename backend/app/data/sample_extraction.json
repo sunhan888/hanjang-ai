@@ -1,0 +1,20 @@
+{
+  "doc_type": "주정차위반 과태료 부과 사전통지서",
+  "is_parking_prenotice": true,
+  "readable": true,
+  "unreadable_reason": null,
+  "fields": {
+    "doc_title": {"raw": "주정차위반 과태료 부과 사전통지서", "value": "주정차위반 과태료 사전통지서", "label_seen": "(제목)"},
+    "issuer": {"raw": "서울특별시 마포구청장", "value": "서울특별시 마포구청장", "label_seen": "(서명란)"},
+    "evidence_no": {"raw": "210-2026-57969", "value": "210-2026-57969", "label_seen": "단속번호"},
+    "plate": {"raw": "18노6336 (승용)", "value": "18노6336", "label_seen": "위반차량번호"},
+    "violated_at": {"raw": "2026.09.24(목) 11:14", "value": "2026-09-24 11:14", "label_seen": "위반 일시"},
+    "place": {"raw": "서울특별시 마포구 망원동 175-26 ○○초등학교 앞", "value": "서울특별시 마포구 망원동 175-26 ○○초등학교 앞", "label_seen": "위반 장소"},
+    "violation": {"raw": "어린이보호구역 내 주정차 위반", "value": "어린이보호구역 내 주정차 위반", "label_seen": "위반행위"},
+    "fine": {"raw": "120,000원", "value": "120000", "label_seen": "과태료 금액"},
+    "reduced_fine": {"raw": "96,000원 (20% 감경)", "value": "96000", "label_seen": "기한 내 납부금액"},
+    "deadline": {"raw": "2026년 11월 3일(화)", "value": "2026-11-03", "label_seen": "(문장)"},
+    "account": {"raw": "우리은행 7897-667-528856", "value": "우리은행 7897-667-528856", "label_seen": "납부계좌"},
+    "issued_on": {"raw": "2026. 10. 12.", "value": "2026-10-12", "label_seen": "통지일"}
+  }
+}

@@ -1,0 +1,10 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+httpx>=0.27
+pillow>=10.3
+python-dotenv>=1.0
+# LLM_PROVIDER=anthropic 일 때
+anthropic>=0.40
+# LLM_PROVIDER=openai 일 때
+openai>=1.50
