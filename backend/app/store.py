@@ -52,7 +52,7 @@ class SupabaseStore:
         import httpx
 
         self._base = f"{url}/rest/v1/analyses"
-        self._headers = {"apikey": key, "Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+        self._headers = {"apikey": key,"Content-Type": "application/json"}
         self._http = httpx.Client(timeout=10.0)
 
     def create(self, row: dict) -> None:

@@ -16,6 +16,11 @@ create table if not exists public.analyses (
 create index if not exists analyses_expires_at_idx on public.analyses (expires_at);
 alter table public.analyses enable row level security;
 
+-- 백엔드 서버에만 판독 결과 접근 권한 부여
+grant select, insert, update, delete
+on table public.analyses
+to service_role;
+
 -- 만료 정리 함수. 서버도 조회할 때 만료된 행을 지우지만, 아무도 안 연 결과까지 지우려면 예약 실행을 건다.
 create or replace function public.purge_expired_analyses() returns void
 language sql as $$
