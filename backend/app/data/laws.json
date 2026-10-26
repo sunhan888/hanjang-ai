@@ -8,7 +8,7 @@
     "plain": "과태료를 매기기 전에 미리 알리고, 10일 넘게 의견을 낼 기회를 줘야 해요. 그래서 이 안내문이 왔어요.",
     "keywords": ["사전통지", "의견", "의견제출", "의견진술", "기한", "억울"],
     "source_url": "https://www.law.go.kr/법령/질서위반행위규제법",
-    "verified": false
+    "verified": true
   },
   {
     "id": "L18",
@@ -19,7 +19,7 @@
     "plain": "마감일 안에 스스로 내면 깎아 줘요. 깎인 금액을 내면 절차가 끝나요.",
     "keywords": ["자진납부", "감경", "납부", "기한", "종료"],
     "source_url": "https://www.law.go.kr/법령/질서위반행위규제법",
-    "verified": false
+    "verified": true
   },
   {
     "id": "L18-5",
@@ -30,7 +30,7 @@
     "plain": "깎아 주는 폭은 최대 20%예요.",
     "keywords": ["20%", "100분의 20", "감경", "자진납부"],
     "source_url": "https://www.law.go.kr/법령/질서위반행위규제법시행령",
-    "verified": false
+    "verified": true
   },
   {
     "id": "L2-2",
@@ -41,7 +41,7 @@
     "plain": "기초생활수급자 등은 절반 범위에서 더 줄일 수 있어요. 과태료를 밀린 적이 있으면 안 돼요. 기한 안에 내는 감경과 함께 받을 수 있는지는 기관에 확인하세요.",
     "keywords": ["50%", "수급자", "한부모", "장애인", "국가유공자", "미성년자", "감경"],
     "source_url": "https://www.law.go.kr/법령/질서위반행위규제법시행령",
-    "verified": false
+    "verified": true
   },
   {
     "id": "L20",
@@ -52,7 +52,7 @@
     "plain": "원래 금액 고지서를 받은 날부터 60일 안에 서면으로 이의를 낼 수 있어요.",
     "keywords": ["이의", "이의제기", "60일", "불복"],
     "source_url": "https://www.law.go.kr/법령/질서위반행위규제법",
-    "verified": false
+    "verified": true
   },
   {
     "id": "L24",
@@ -63,7 +63,7 @@
     "plain": "고지서 기한을 넘기면 3%가 더 붙고, 그 뒤 달마다 1.2%씩 늘어요.",
     "keywords": ["가산금", "중가산금", "체납", "3%"],
     "source_url": "https://www.law.go.kr/법령/질서위반행위규제법",
-    "verified": false
+    "verified": true
   },
   {
     "id": "F6",
@@ -74,6 +74,6 @@
     "plain": "어디에 세웠는지에 따라 금액이 달라요. 어린이보호구역은 일반 도로의 세 배예요.",
     "keywords": ["금액", "어린이보호구역", "소화전", "승용", "승합", "2시간"],
     "source_url": "https://www.law.go.kr/법령/도로교통법시행령",
-    "verified": false
+    "verified": true
   }
 ]
