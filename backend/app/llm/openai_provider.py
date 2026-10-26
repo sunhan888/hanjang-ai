@@ -28,6 +28,7 @@ class OpenAIProvider:
         resp = self._client.chat.completions.create(
             model=self.model,
             messages=messages,
+            temperature=0,
             response_format={"type": "json_schema",
                              "json_schema": {"name": name, "strict": True, "schema": schema}},
             max_completion_tokens=max_tokens,
