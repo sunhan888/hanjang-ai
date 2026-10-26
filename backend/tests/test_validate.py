@@ -68,3 +68,9 @@ def test_illegal_fine_amount():
 def test_overdue_and_today_states():
     assert validate(fields(), date(2026, 11, 5))[2]["state"] == "overdue"
     assert validate(fields(), date(2026, 11, 3))[2]["state"] == "today"
+
+
+def test_evidence_label_is_not_part_of_value():
+    f, *_ = validate(fields(증거번호={"raw": "관리번호 502-2026-12508", "value": "502-2026-12508",
+                                "label_seen": "관리번호"}), TODAY)
+    assert f["증거번호"].value == "502-2026-12508"

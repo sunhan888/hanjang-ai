@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date, datetime
+import re
 
 from ..fields import BY_KEY, DOC_TYPE, KEYS
 from .fines import expected_amounts
@@ -51,6 +52,14 @@ def _label(key: str, c: Checked) -> str:
     if c.label_seen and not c.label_seen.startswith("("):
         return c.label_seen
     return BY_KEY[key].plain
+
+
+def _clean_evidence_no(value: str | None) -> str | None:
+    """LLM이 값 앞에 인쇄 라벨을 함께 옮겨도 번호만 API 값으로 남긴다."""
+    s = _s(value)
+    if not s:
+        return None
+    return re.sub(r"^(?:증거번호|단속번호|위반번호|관리번호)\s*[:：]?\s*", "", s)
 
 
 def _llm_datetime(v) -> datetime | None:
@@ -147,7 +156,7 @@ def _parse_fields(raw_fields: dict[str, dict]) -> tuple[dict[str, Checked], list
 
     # 증거번호 (형식이 기관마다 달라 모양 검사는 하지 않는다)
     c = f["증거번호"]
-    c.value = _s(c.raw) or _s(c.llm_value)
+    c.value = _clean_evidence_no(c.raw) or _clean_evidence_no(c.llm_value)
     c.parsed = compact_id(c.value)
 
     # 나머지 글자 항목
