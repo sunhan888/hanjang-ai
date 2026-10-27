@@ -64,6 +64,22 @@ def test_guard_rejects_changed_numbers():
     assert guard("11월 3일까지 96,000원", "11월 3일 전에 96,000원을 내요") == "11월 3일 전에 96,000원을 내요"
 
 
+def test_guard_protects_date_amount_and_account_numbers():
+    original = "2026년 11월 3일까지 96,000원, 국민은행 123-456-7890에 내세요."
+    assert guard(
+        original,
+        "2026년 11월 4일까지 96,000원, 국민은행 123-456-7890에 내세요.",
+    ) == original
+    assert guard(
+        original,
+        "2026년 11월 3일까지 96,000원, 국민은행 123-456-7891에 내세요.",
+    ) == original
+    assert guard(
+        original,
+        "2026년 11월 3일까지 96,000원, 국민은행 123-456-7890으로 보내 주세요.",
+    ) == "2026년 11월 3일까지 96,000원, 국민은행 123-456-7890으로 보내 주세요."
+
+
 def test_polish_falls_back_on_wrong_length():
     class P:
         def polish(self, texts):
