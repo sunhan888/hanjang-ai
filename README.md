@@ -34,7 +34,7 @@ hanjang-ai/
 │  │  ├─ pipeline/          ① 판독 → ② 검증 → ③ 근거 → ④ 할 일
 │  │  ├─ data/laws.json     근거 법령 7건
 │  │  └─ store.py           결과 저장소 (메모리 / Supabase)
-│  ├─ tests/                pytest 24개
+│  ├─ tests/                pytest 26개
 │  └─ scripts/make_mock_results.py   frontend/mock/*.json 다시 만들기
 ├─ frontend/                바닐라 HTML·CSS·JS, 화면 9개, mock/ (서버 없이 보기)
 ├─ eval/                    테스트셋 20장, 일괄 판독(run_batch), 채점(evaluate), 생성기
@@ -78,7 +78,7 @@ OpenAI라면 `LLM_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL`(이미지 �
 ## 테스트와 평가
 
 ```bash
-cd backend && pytest -q                                   # 단위·API 테스트 (24개)
+cd backend && pytest -q                                   # 단위·API 테스트 (26개)
 cd .. && python eval/run_batch.py --provider mock-noisy   # 테스트셋 20장 일괄 판독 → eval/predictions.csv
 python eval/evaluate.py --out eval/report.md              # 채점 리포트
 ```
@@ -90,4 +90,4 @@ python eval/evaluate.py --out eval/report.md              # 채점 리포트
 ## 출처·기여 표기
 
 이 저장소의 첫 버전은 멘토가 제공한 출발점이며, 팀이 수정·확장합니다. 과정 규정상 외부 도움을 밝혀야 하면 이 문단을 유지하세요.
-`backend/app/data/laws.json`의 법령 문구는 국가법령정보센터 원문과 대조하기 전입니다(GUIDE 7.6). 이 서비스는 안내 서비스이며 법률 자문이 아닙니다.
+`backend/app/data/laws.json`의 법령 문구는 국가법령정보센터 원문과 대조했고 검증 상태를 기록했습니다. 이 서비스는 안내 서비스이며 법률 자문이 아닙니다.
