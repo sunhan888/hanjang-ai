@@ -1,0 +1,27 @@
+
+{
+  "id": "/",
+  "name": "한장해결AI 2.0",
+  "short_name": "한장해결",
+  "description": "공공문서를 쉽게 이해하고 중요한 처리기한을 놓치지 않도록 도와주는 AI 비서",
+  "lang": "ko-KR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

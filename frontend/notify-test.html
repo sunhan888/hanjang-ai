@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>한장해결AI 알림 테스트</title>
+</head>
+<body>
+  <h2>한장해결AI 2.0</h2>
+  <p>휴대폰 알림 기능 테스트</p>
+
+  <button id="testBtn">
+    🔔 테스트 알림 보내기
+  </button>
+
+  <p id="status"></p>
+
+  <script>
+    const btn = document.getElementById("testBtn");
+    const status = document.getElementById("status");
+
+    btn.addEventListener("click", async () => {
+      if (!("Notification" in window) ||
+          !("serviceWorker" in navigator)) {
+        status.textContent = "알림을 지원하지 않는 브라우저예요.";
+        return;
+      }
+
+      try {
+        // 버튼을 누르면 알림 권한 요청
+        const permission = await Notification.requestPermission();
+
+        if (permission !== "granted") {
+          status.textContent = "알림 권한이 허용되지 않았어요.";
+          return;
+        }
+
+        const registration =
+          await navigator.serviceWorker.ready;
+
+        // 테스트 알림 표시
+        await registration.showNotification(
+          "한장해결AI 2.0",
+          {
+            body: "테스트 성공! 납부기한 알림을 받을 준비가 되었어요.",
+            icon: "/icons/icon-192.png",
+            data: { url: "/" }
+          }
+        );
+
+        status.textContent = "✅ 알림 표시 요청 성공!";
+      } catch (error) {
+        status.textContent = "오류: " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
