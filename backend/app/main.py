@@ -23,6 +23,7 @@ from .llm import get_provider
 from .pipeline.run import PipelineError, analyze
 from .schemas import Analysis
 from .store import get_store
+from .push_api import router as push_router
 
 log = logging.getLogger("hanjang")
 
@@ -99,6 +100,7 @@ def delete_analysis(aid: str):
 def health():
     return {"ok": True, "provider": provider.name, "store": store.name, "today": settings.today().isoformat()}
 
+app.include_router(push_router)
 
 FRONTEND = ROOT / "frontend"
 if FRONTEND.exists():

@@ -8,3 +8,4 @@ python-dotenv>=1.0
 anthropic>=0.40
 # LLM_PROVIDER=openai 일 때
 openai>=1.50
+pywebpush==2.5.0

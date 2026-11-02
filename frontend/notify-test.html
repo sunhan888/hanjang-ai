@@ -4,57 +4,192 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-  <title>한장해결AI 알림 테스트</title>
+        content="width=device-width, initial-scale=1">
+  <title>한장해결AI 2.0 알림 테스트</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 24px;
+      max-width: 480px;
+      margin: auto;
+      line-height: 1.6;
+    }
+    button {
+      padding: 15px;
+      margin: 8px 0;
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+    }
+    button:disabled {
+      opacity: 0.5;
+    }
+    #status {
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
-  <h2>한장해결AI 2.0</h2>
-  <p>휴대폰 알림 기능 테스트</p>
+  <h2>🔔 한장해결AI 2.0</h2>
+  <p>휴대폰 푸시 알림 기능 테스트</p>
 
-  <button id="testBtn">
-    🔔 테스트 알림 보내기
+  <button id="localBtn">
+    1. 기기 알림 표시 테스트
   </button>
 
-  <p id="status"></p>
+  <button id="subscribeBtn" disabled>
+    2. 서버 푸시 알림 등록
+  </button>
+
+  <p id="status">준비 중...</p>
 
   <script>
-    const btn = document.getElementById("testBtn");
-    const status = document.getElementById("status");
+    const localBtn = document.getElementById("localBtn");
+    const subscribeBtn = document.getElementById("subscribeBtn");
+    const statusEl = document.getElementById("status");
 
-    btn.addEventListener("click", async () => {
-      if (!("Notification" in window) ||
-          !("serviceWorker" in navigator)) {
-        status.textContent = "알림을 지원하지 않는 브라우저예요.";
-        return;
-      }
+    let publicKey = null;
+    let registration = null;
 
+    function show(message) {
+      statusEl.textContent = message;
+    }
+
+    function toUint8Array(value) {
+      const padding = "=".repeat(
+        (4 - value.length % 4) % 4
+      );
+
+      const base64 = (value + padding)
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
+
+      const raw = atob(base64);
+
+      return Uint8Array.from(
+        raw,
+        char => char.charCodeAt(0)
+      );
+    }
+
+    // 서버와 Service Worker 준비
+    async function initialize() {
       try {
-        // 버튼을 누르면 알림 권한 요청
-        const permission = await Notification.requestPermission();
-
-        if (permission !== "granted") {
-          status.textContent = "알림 권한이 허용되지 않았어요.";
+        if (
+          !("serviceWorker" in navigator) ||
+          !("PushManager" in window) ||
+          !("Notification" in window)
+        ) {
+          show("이 브라우저에서는 푸시 알림을 지원하지 않아요.");
           return;
         }
 
-        const registration =
-          await navigator.serviceWorker.ready;
+        await navigator.serviceWorker.register("/sw.js");
+        registration = await navigator.serviceWorker.ready;
 
-        // 테스트 알림 표시
+        const response = await fetch("/api/push/public-key");
+
+        if (!response.ok) {
+          throw new Error("서버 공개키를 가져오지 못했어요.");
+        }
+
+        const data = await response.json();
+        publicKey = data.publicKey;
+
+        subscribeBtn.disabled = false;
+        show("✅ 준비 완료! 알림을 등록할 수 있어요.");
+
+      } catch (error) {
+        show("준비 오류: " + error.message);
+      }
+    }
+
+    localBtn.addEventListener("click", async () => {
+      try {
+        const permission = await Notification.requestPermission();
+
+        if (permission !== "granted") {
+          show("알림 권한을 허용해 주세요.");
+          return;
+        }
+
+        if (!registration) {
+          show("Service Worker가 아직 준비되지 않았어요.");
+          return;
+        }
+
         await registration.showNotification(
           "한장해결AI 2.0",
           {
-            body: "테스트 성공! 납부기한 알림을 받을 준비가 되었어요.",
-            icon: "/icons/icon-192.png",
-            data: { url: "/" }
+            body: "기기 알림 표시 테스트 성공!",
+            icon: "/icons/icon-192.png"
           }
         );
 
-        status.textContent = "✅ 알림 표시 요청 성공!";
+        show("✅ 기기 알림 표시 성공!");
+
       } catch (error) {
-        status.textContent = "오류: " + error.message;
+        show("오류: " + error.message);
       }
     });
+
+    subscribeBtn.addEventListener("click", async () => {
+      try {
+        if (!publicKey || !registration) {
+          show("준비가 완료되지 않았어요.");
+          return;
+        }
+
+        const permission = await Notification.requestPermission();
+
+        if (permission !== "granted") {
+          show("알림 권한을 허용해 주세요.");
+          return;
+        }
+
+        // 브라우저 푸시 구독 생성
+        let subscription =
+          await registration.pushManager.getSubscription();
+
+        if (!subscription) {
+          subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: toUint8Array(publicKey)
+          });
+        }
+
+        // 서버에 구독 정보 전송
+        const response = await fetch("/api/push/subscribe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(subscription)
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            "서버 구독 등록 실패: " + response.status
+          );
+        }
+
+        const result = await response.json();
+
+        show(
+          "✅ 서버 푸시 구독 등록 성공!\n\n" +
+          "구독 ID:\n" + result.subscription_id
+        );
+
+      } catch (error) {
+        show("푸시 등록 오류: " + error.message);
+      }
+    });
+
+    initialize();
   </script>
 </body>
 </html>
